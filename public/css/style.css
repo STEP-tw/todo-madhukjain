@@ -15,6 +15,20 @@ h1{
 
 
 
+
+.logInForm{
+  font-size: 50px;
+  margin-top: 50px;
+}
 .homePageLink{
-  
+  font-size: 30px;
+  margin-top: 80px;
+}
+
+
+
+
+
+hr{
+  width:100px;
 }
