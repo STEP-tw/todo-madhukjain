@@ -2,18 +2,33 @@ const http = require('http');
 const fs = require('fs');
 const PORT = 9099;
 const WebApp = require('./webapp');
-
-let registered_users = [{userName:'madhu',name:'Madhuri Kondekar'}]
+const registered_users = [{userName:'madhu',name:'Madhuri Kondekar'}]
 let toDo = JSON.parse(fs.readFileSync('./data/toDoItem.json','utf8'));
+let records = {}
 let obj = {};
 
-let app = WebApp.create();
+const getExtension = function(fileName) {
+  let extension = fileName.slice(fileName.lastIndexOf('.'));
+  return extension;
+};
+
+const getContentType = function(extension) {
+  let contentType = {
+    ".html": "text/html",
+    ".css": "text/css",
+  }
+  return contentType[extension];
+};
+
+const app = WebApp.create();
 
 const displayContent = function(req,res){
+  let extension = getExtension(req.url);
+  let contentType = getContentType(extension);
   res.statusCode = 200;
+  res.setHeader('Content-type',contentType);
   res.write(fs.readFileSync('./public' + req.url));
-  res.end();
-}
+};
 
 app.get('/',(req,res) =>{
   res.statusCode = 200;
@@ -23,43 +38,30 @@ app.get('/',(req,res) =>{
 });
 
 app.get('/homePage.html',(req,res) =>{
-  res.setHeader('Content-type','text/html');
   displayContent(req,res);
+  res.end();
 });
 
 app.get('/css/style.css',(req,res) =>{
-
-  res.setHeader('Content-type','text/css');
   displayContent(req,res);
+  res.end();
 });
 
 app.get('/logInPage.html',(req,res) =>{
-
-  res.setHeader('Content-type','text/html');
   displayContent(req,res);
+  res.end();
 });
 
 app.get('/toDoList.html',(req,res) =>{
-  res.statusCode = 200;
-  res.setHeader('Content-type','text/html');
-  res.write(fs.readFileSync('./public' + req.url));
+  displayContent(req,res);
   toDo.forEach((obj)=> {
     res.write(`<a href="">${obj.item}</a><br>`)
   });
   res.end();
 });
 
-app.post('/toDoList.html',(req,res) =>{
-  fs.writeFileSync('./data/toDoItem.json',JSON.stringify(toDo,null,2));
-  obj.item = req.body.todo;
-  toDo.push(obj);
-  obj ={};
-  res.statusCode = 200;
-  res.setHeader('Content-type','text/html');
-  res.write(fs.readFileSync('./public' + req.url));
-  toDo.forEach((obj)=> {
-    res.write(`<a href="/editPage.html">${obj.item}</a><br>`)
-  });
+app.get('/editPage.html',(req,res) =>{
+  displayContent(req,res);
   res.end();
 });
 
@@ -72,11 +74,15 @@ app.post('/logInPage.html',(req,res) =>{
   res.redirect('/toDoList.html');
 });
 
-app.get('/editPage.html',(req,res) =>{
-  console.log("hi");
-  res.statusCode = 200;
-  res.setHeader('Content-type','text/html');
-  res.write(fs.readFileSync('./public' + req.url));
+app.post('/toDoList.html',(req,res) =>{
+  fs.writeFileSync('./data/toDoItem.json',JSON.stringify(toDo,null,2));
+  obj.item = req.body.todo;
+  toDo.push(obj);
+  obj = {};
+  displayContent(req,res);
+  toDo.forEach((obj)=> {
+    res.write(`<a href="/editPage.html"> ${obj.item}</a><br>`);
+  });
   res.end();
 });
 
