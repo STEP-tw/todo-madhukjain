@@ -8,10 +8,15 @@
     <link rel="stylesheet" href="/css/style.css">
     <p class="title" >Edit ToDo List</p>
     <h3>Enter ToDo Title to Edit:</h3 >
-    <input class="editTitle" type="text" name="edit" >
-    <input type="submit" name="submit" value="Edit ToDo List"><br><br>
-    <hr/>
-    <a class="backPageLink" href="toDoList.html">Go To Home Page</a>
-    <a class="goToHome" href="/homePage.html">Log Out</a>
+    <form class="editedBox" action="editToDo.html" method="post">
+      Title:<br>
+      <textarea id="" name="title" rows="2" cols="50"></textarea><br>
+      Description:<br>
+      <textarea id="box" name="textArea" rows="15" cols="90"></textarea>
+      <button type="button" name="Submit">Submit</button>
+    </form>
+      <hr/>
+      <a class="backPageLink" href="toDoList.html">Go To Home Page</a>
+      <a class="goToHome" href="/homePage.html">Log Out</a>
   </body>
 </html>

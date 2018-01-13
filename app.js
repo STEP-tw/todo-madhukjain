@@ -55,11 +55,6 @@ app.get('/toDoList.html',(req,res) =>{
   res.end();
 });
 
-app.get('/toDoListItems.html',(req,res) =>{
-  displayContent(req,res);
-  res.end();
-});
-
 app.get('/editToDo.html',(req,res) =>{
   displayContent(req,res);
   res.end();
