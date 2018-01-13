@@ -6,16 +6,20 @@
 </head>
 <body>
   <link rel="stylesheet" href="/css/style.css">
-  <p class="title" >ToDo List </p>
+  <p class="title" >ToDo List Titles</p>
   <hr/>
   <form action="" method = "post">
-    <a class="link" href="" >Add a toDo item</a><br><br>
-    <input class="addToDo" type="text" name="todo">
-    <input type="submit" name="submit" value="Add a ToDo">
-    <hr/>
-    <p class="note">Click On Any ToDo Item to Edit it.</p>
-    <a class="logout" href="homePage.html" > LogOut </a>
-    <hr/>
+    <div class="todo">
+      <p class="heading" >Add a ToDo List Title</p>
+      <input class="toDoTitle" type="text" name="title"  >
+      <input type="submit" name="submit" value="Add a ToDo Title"><br><br>
+      <input class="toDoTitleDes" type="text" name="description"  >
+      <input type="submit" name="submit" value="Add a ToDo Description"><br><br>
+      <hr/>
+    </div>
   </form>
+  <a class="edit" href="/editToDo.html">Edit ToDo</a>
+  <a class="delete" href="/deleteToDo.html">Delete ToDo</a>
+  <a class="goToHome" href="/homePage.html">Log Out</a>
 </body>
 </html>

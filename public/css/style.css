@@ -7,6 +7,9 @@ h1{
   text-align: center;
   font-size: 40px;
 }
+.login{
+  margin-left: 520px;
+}
 .logInButton{
   margin-left: 600px;
   text-align: center;
@@ -16,24 +19,32 @@ h1{
   font-size: 50px;
   margin-top: 50px;
 }
-.homePageLink{
+a{
   font-size: 30px;
-  margin-top: 80px;
+  margin-left: 500px;
 }
 hr{
   width:1200px;
+  margin-left: 0px;
 }
 .title{
   text-align: center;
   font-size: 40px;
 }
-a{
+.homePageLink{
   font-size: 30px;
   margin-left: 200px;
 }
-.addToDo{
+.toDoTitle{
+  font-size: 15px;
+}
+.toDoTitleDes{
+  font-size: 15px;
+}
+.addToDoItems{
   margin-left: 200px;
-  font-size: 30px;
+  font-size: 15px;
+  margin-top: -100px;
 }
 .subtitle{
   margin-left: 200px;
@@ -48,4 +59,19 @@ a{
 .note{
   font-size: 20px;
   margin-left: 200px;
+}
+.edit{
+  font-size: 20px;
+}
+.heading{
+  font-size: 20px;
+}
+.delete{
+  font-size: 20px;
+  margin-left: 100px;
+}
+.goToHome{
+  margin-left: 100px;
+  margin-top: -100px;
+  font-size: 20px;
 }

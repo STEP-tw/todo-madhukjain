@@ -3,7 +3,7 @@ const fs = require('fs');
 const PORT = 9099;
 const WebApp = require('./webapp');
 const registered_users = [{userName:'madhu',name:'Madhuri Kondekar'}]
-let toDo = JSON.parse(fs.readFileSync('./data/toDoItem.json','utf8'));
+let toDo = JSON.parse(fs.readFileSync('./data/toDoTitles.json','utf8'));
 let records = {}
 let obj = {};
 
@@ -55,12 +55,22 @@ app.get('/logInPage.html',(req,res) =>{
 app.get('/toDoList.html',(req,res) =>{
   displayContent(req,res);
   toDo.forEach((obj)=> {
-    res.write(`<a href="">${obj.item}</a><br>`)
+    res.write(`<h2>Title: ${obj.body.title}</h2>`)
   });
   res.end();
 });
 
-app.get('/editPage.html',(req,res) =>{
+app.get('/toDoListItems.html',(req,res) =>{
+  displayContent(req,res);
+  res.end();
+});
+
+app.get('/editToDo.html',(req,res) =>{
+  displayContent(req,res);
+  res.end();
+});
+
+app.get('/deleteToDo.html',(req,res) =>{
   displayContent(req,res);
   res.end();
 });
@@ -75,13 +85,13 @@ app.post('/logInPage.html',(req,res) =>{
 });
 
 app.post('/toDoList.html',(req,res) =>{
-  fs.writeFileSync('./data/toDoItem.json',JSON.stringify(toDo,null,2));
-  obj.item = req.body.todo;
+  fs.writeFileSync('./data/toDoTitles.json',JSON.stringify(toDo,null,2));
+  obj.body = req.body
   toDo.push(obj);
   obj = {};
   displayContent(req,res);
   toDo.forEach((obj)=> {
-    res.write(`<a href="/editPage.html"> ${obj.item}</a><br>`);
+    res.write(`<h2>Title: ${obj.body.title}</h2>`);
   });
   res.end();
 });
