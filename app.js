@@ -1,9 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const WebApp = require('./webapp');
-const registered_users = [{userName:'madhu'}]
-
-let item = 1;
+const registered_users = [{userName:'madhu'}];
 let toDo = JSON.parse(fs.readFileSync('./data/toDoTitles.json','utf8'));
 
 const getExtension = function(fileName) {
