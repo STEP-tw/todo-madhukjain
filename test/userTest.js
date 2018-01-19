@@ -1,194 +1,171 @@
 const chai = require('chai');
 const assert = chai.assert;
-const ToDo = require('../lib/toDo.js');
+const TodoList = require('../lib/todoList.js');
 const Item = require('../lib/item.js');
 const User = require('../lib/user.js');
 
 describe('user',()=>{
   describe('#getName',()=>{
-    it('Should return name of the user',()=>{
-      let user = new User('Madhuri');
+    it('should return name of the user',()=>{
+      let user = new User('Madhuri',"admin@123");
       assert.equal(user.getName(),'Madhuri');
     });
   });
 
-  describe('#getToDos',()=>{
-    it('should return empty toDos',()=>{
-      let user = new User('Madhuri');
-      assert.deepEqual(user.getToDos(),{});
+  describe('#getTodos',()=>{
+    it('should return empty todos',()=>{
+      let user = new User('Madhuri',"admin@123");
+      assert.deepEqual(user.getTodos(),{});
     });
-    it('should return all toDos',()=>{
-      let user = new User('Madhuri');
-      user.addToDo("Today's Work",1001,"Planning of the day");
-      user.addToDo("Tomorrow's Work",1002,"Planning of the day");
+    it('should return all todos',()=>{
+      let user = new User('Madhuri',"admin@123");
+      user.addTodo("Today's Work","Planning of the day");
+      user.addTodo("Tomorrow's Work","Planning of the day");
       let expected = {
-        1001:{title:"Today's Work",description:"Planning of the day",
-        itemId:0,items:{},toDoId:1001},
-        1002:{title:"Tomorrow's Work",description:"Planning of the day",
-        itemId:0,items:{},toDoId:1002}}
-      assert.deepEqual(user.getToDos(),expected);
-    })
+        1001:new TodoList("Today's Work",1001,"Planning of the day"),
+        1002:new TodoList("Tomorrow's Work",1002,"Planning of the day")};
+      assert.deepEqual(user.getTodos(),expected);
+    });
   });
 
-  describe('#addToDo',()=>{
-    it('should add List to do toDo', ()=>{
-      let user = new User('Madhuri');
-      user.addToDo("Today's Work",1001,"Planning of the day");
+  describe('#addTodo',()=>{
+    it('should add list to todos', ()=>{
+      let user = new User('Madhuri',"admin@123");
+      user.addTodo("Today's Work","Planning of the day");
       let expected = {
-        1001:{title:"Today's Work",
-        description:"Planning of the day",
-        itemId:0,
-        items:{},
-        toDoId:1001}}
-      assert.deepEqual(user.getToDos(),expected);
+        1001:new TodoList("Today's Work",1001,"Planning of the day")}
+      assert.deepEqual(user.getTodos(),expected);
     });
   });
 
-  describe('#getToDoId',()=>{
-    it('should return toDoId',()=>{
-      let user = new User('Madhuri');
-      assert.equal(user.getToDoId(),1000);
+  describe('#deleteTodo',()=>{
+    it('should delete list from todos',()=>{
+      let user = new User('Madhuri',"admin@123");
+      user.addTodo("Today's Work",1001,"Planning of the day");
+      user.deleteTodo(1001);
+      assert.deepEqual(user.getTodos(),{});
     });
   });
 
-  describe('#deleteToDo',()=>{
-    it('should delete list from toDos',()=>{
-      let user = new User('Madhuri');
-      user.addToDo("Today's Work",1001,"Planning of the day");
-      user.deleteToDo(1001);
-      assert.deepEqual(user.getToDos(),{});
+  describe('#getTodoByID',()=>{
+    it('should return todo from todos',()=>{
+      let user = new User('Madhuri',"admin@123");
+      user.addTodo("Today's Work","Planning of the day");
+      user.addTodo("Tomorrow's Work","Planning of the day");
+      let expected =new TodoList("Today's Work",1001,"Planning of the day");
+      assert.deepEqual(user.getTodoByID(1001),expected);
     });
   });
 
-  describe('#getToDo',()=>{
-    it('should return toDo from toDos',()=>{
-      let user = new User('Madhuri');
-      user.addToDo("Today's Work",1001,"Planning of the day");
-      user.addToDo("Tomorrow's Work",1002,"Planning of the day");
-      let expected = {
-        title:"Today's Work",
-        description:"Planning of the day",
-        itemId:0,
-        items:{},
-        toDoId:1001}
-      assert.deepEqual(user.getToDo(1001),expected);
-    });
-  });
-
-  describe('#editToDo',()=>{
+  describe('#updateTodoTitle',()=>{
     it('should edit title of the toDo', ()=>{
-      let user = new User('Madhuri');
-      user.addToDo("Today's Work",1001,"Planning of the day");
-      user.editToDoTitle(1001,"Tomorrow's Work");
-      let expected = {
-        title:"Tomorrow's Work",
-        description:"Planning of the day",
-        itemId:0,
-        items:{},
-        toDoId:1001}
-      assert.deepEqual(user.getToDo(1001),expected);
+      let user = new User('Madhuri',"admin@123");
+      user.addTodo("Today's Work","Planning of the day");
+      user.updateTodoTitle(1001,"Tomorrow's Work");
+      let expected = new TodoList("Tomorrow's Work",1001,"Planning of the day");
+      assert.deepEqual(user.getTodoByID(1001),expected);
     });
   });
 
-  describe('#editToDoDescription',()=>{
+  describe('#updateTodoDescription',()=>{
     it('should edit description of the toDo', ()=>{
-      let user = new User('Madhuri');
-      user.addToDo("Today's Work",1001,"Planning of the day");
-      user.editToDoDescription(1001,"Planning");
-      let expected = {
-        title:"Today's Work",
-        description:"Planning",
-        itemId:0,
-        items:{},
-        toDoId:1001}
-      assert.deepEqual(user.getToDo(1001),expected);
+      let user = new User('Madhuri',"admin@123");
+      user.addTodo("Today's Work",1001,"Planning of the day");
+      user.updateTodoDescription(1001,"Planning");
+      let expected = new TodoList("Today's Work",1001,"Planning");
+      assert.deepEqual(user.getTodoByID(1001),expected);
     });
   });
 
   describe('#addItem',()=>{
-    it('should add item in the toDo', ()=>{
-      let user = new User('Madhuri');
-      user.addToDo("Today's Work",1001,"Planning of the day");
+    it('should add objective in the toDo', ()=>{
+      let user = new User('Madhuri',"admin@123");
+      user.addTodo("Today's Work",1001,"Planning of the day");
       user.addItem("Reading",1001);
-      let expected = {1:{itemText:"Reading",status:false,itemId:1}}
-      assert.deepEqual(user.getItems(1001),expected);
+      let expected = {1:new Item("Reading",1)}
+      assert.deepEqual(user.getItemsByID(1001),expected);
     });
   });
 
   describe('#deleteItem',()=>{
-    it('should delete item from the toDos', ()=>{
-      let user = new User('Madhuri');
-      user.addToDo("Today's Work",1001,"Planning of the day");
+    it('should delete item from the todos', ()=>{
+      let user = new User('Madhuri',"admin@123");
+      user.addTodo("Today's Work",1001,"Planning of the day");
       user.addItem("Reading",1001);
       user.deleteItem(1001,1);
       let expected = {}
-      assert.deepEqual(user.getItems(1001),expected);
+      assert.deepEqual(user.getItemsByID(1001),expected);
     });
   });
 
-  describe('#editItem',()=>{
-    it('should edit item from the ToDo',()=>{
-      let user = new User('Madhuri');
-      user.addToDo("Today's Work",1001,"Planning of the day");
+  describe('#updateItem',()=>{
+    it('should edit item from the Todo',()=>{
+      let user = new User('Madhuri',"admin@123");
+      user.addTodo("Today's Work",1001,"Planning of the day");
       user.addItem("Reading",1001);
-      user.editItem(1001,1,"Running");
-      let expected = {itemText:"Running",status:false,itemId:1}
-      assert.deepEqual(user.getItem(1001,1),expected);
+      user.updateItem(1001,1,"Running");
+      let expected = new Item("Running",1);
+      assert.deepEqual(user.getItemByID(1001,1),expected);
     });
   });
 
-  describe('#markItemAsDone',()=>{
+  describe('#updateItemStatus',()=>{
     it('should mark item as true',()=>{
-      let user = new User('Madhuri');
-      user.addToDo("Today's Work",1001,"Planning of the day");
+      let user = new User('Madhuri',"admin@123");
+      user.addTodo("Today's Work",1001,"Planning of the day");
       user.addItem("Reading",1001);
-      user.markItemAsDone(1001,1);
-      let expected = {itemText:"Reading",status:true,itemId:1}
-      assert.deepEqual(user.getItem(1001,1),expected);
+      user.updateItemStatus(1001,1);
+      let expected = new Item("Reading",1,true);
+      assert.deepEqual(user.getItemByID(1001,1),expected);
     });
-  });
-
-  describe('#markItemAsNotDone',()=>{
-    it('should mark item not done',()=>{
-      let user = new User('Madhuri');
-      user.addToDo("Today's Work",1001,"Planning of the day");
+    it('should mark item as false',()=>{
+      let user = new User('Madhuri',"admin@123");
+      user.addTodo("Today's Work",1001,"Planning of the day");
       user.addItem("Reading",1001,true);
-      user.markItemAsNotDone(1001,1);
-      let expected = {itemText:"Reading",status:false,itemId:1}
-      assert.deepEqual(user.getItem(1001,1),expected);
+      user.updateItemStatus(1001,1);
+      let expected = new Item("Reading",1);
+      assert.deepEqual(user.getItemByID(1001,1),expected);
     });
   });
 
-  describe('#getItem',()=>{
-    it('should return item of given itemId',()=>{
-      let user = new User('Madhuri');
-      user.addToDo("Today's Work",1001,"Planning of the day");
+
+  describe('#getItemByID',()=>{
+    it('should return item of given itemID from given listID',()=>{
+      let user = new User('Madhuri',"admin@123");
+      user.addTodo("Today's Work",1001,"Planning of the day");
       user.addItem("Reading",1001);
       user.addItem("Running",1001);
-      let expected = {itemText:"Running",itemId:2,status:false}
-    assert.deepEqual(user.getItem(1001,2),expected);
+      let expected = new Item("Running",2);
+    assert.deepEqual(user.getItemByID(1001,2),expected);
     });
   });
 
-  describe('#getItems',()=>{
-    it('should return all items from given toDo',()=>{
-      let user = new User('Madhuri');
-      user.addToDo("Today's Work",1001,"Planning of the day");
+  describe('#getItemsByID',()=>{
+    it('should return all items from given todoID',()=>{
+      let user = new User('Madhuri',"admin@123");
+      user.addTodo("Today's Work",1001,"Planning of the day");
       user.addItem("Reading",1001);
       user.addItem("Running",1001);
       let expected = {
-        1:{itemText:"Reading",itemId:1,status:false},
-        2:{itemText:"Running",itemId:2,status:false}}
-      assert.deepEqual(user.getItems(1001),expected);
+        1:new Item("Reading",1),
+        2:new Item("Running",2)}
+      assert.deepEqual(user.getItemsByID(1001),expected);
     });
   });
 
-  describe('#getToDoDescription',()=>{
-    it('should return toDo description of given toDoId',()=>{
-      let user = new User('Madhuri');
-      user.addToDo("Today's Work",1001,"Planning of the day");
+  describe('#getTodoDescription',()=>{
+    it('should return toDo description of given toDoID',()=>{
+      let user = new User('Madhuri',"admin@123");
+      user.addTodo("Today's Work","Planning of the day");
       let expected = "Planning of the day";
-      assert.deepEqual(user.getToDoDescription(1001),expected);
+      assert.deepEqual(user.getTodoDescription(1001),expected);
     })
+  });
+
+  describe('#isValidPassword',()=>{
+    it('should return true if password is same as  the user password',()=>{
+      let user = new User('Madhuri',"admin@123","admin@123");
+      assert.isOk(user.isValidPassword("admin@123"));
+    });
   });
 });

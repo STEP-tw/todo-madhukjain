@@ -84,11 +84,30 @@ describe("TodoList",()=>{
     });
   });
 
-
   describe('#getId',()=>{
     it('should return id of todo', ()=>{
       let todo = new TodoList("Today's Work",1001,"Planning of the day");
       assert.equal(todo.getId(),1001);
+    });
+  });
+
+  describe('#updateItem',()=>{
+    it('should update item by given objective',()=>{
+      let todo = new TodoList("Today's Work",1001,"Planning of the day");
+      todo.addItem("Planning");
+      todo.updateItem(1,"Running");
+      let expected = new Item("Running",1);
+      assert.deepEqual(todo.getItemById(1),expected);
+    });
+  });
+
+  describe('#updateItemStatus',()=>{
+    it('should update item by given status',()=>{
+      let todo = new TodoList("Today's Work",1001,"Planning of the day");
+      todo.addItem("Planning");
+      todo.updateItemStatus(1);
+      let expected = new Item("Planning",1,true);
+      assert.deepEqual(todo.getItemById(1),expected);
     });
   });
 });
