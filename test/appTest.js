@@ -5,7 +5,7 @@ process.env.COMMENT_STORE = "../data/toDoTitles.json";
 const app = require('../app.js').app;
 const th = require('./testHelper.js');
 
-describe('app',()=>{
+describe.skip('app',()=>{
   describe('GET /bad',()=>{
     it('responds with 404',done=>{
       request(app,{method:'GET',url:'/bad'},(res)=>{

@@ -34,9 +34,12 @@ describe('user',()=>{
     it('should add List to do toDo', ()=>{
       let user = new User('Madhuri');
       user.addToDo("Today's Work",1001,"Planning of the day");
-      let expected = {1001:{title:"Today's Work",
-                      description:"Planning of the day",
-                      itemId:0,items:{},toDoId:1001}}
+      let expected = {
+        1001:{title:"Today's Work",
+        description:"Planning of the day",
+        itemId:0,
+        items:{},
+        toDoId:1001}}
       assert.deepEqual(user.getToDos(),expected);
     });
   });
@@ -63,8 +66,11 @@ describe('user',()=>{
       user.addToDo("Today's Work",1001,"Planning of the day");
       user.addToDo("Tomorrow's Work",1002,"Planning of the day");
       let expected = {
-        title:"Today's Work",description:"Planning of the day",
-        itemId:0,items:{},toDoId:1001}
+        title:"Today's Work",
+        description:"Planning of the day",
+        itemId:0,
+        items:{},
+        toDoId:1001}
       assert.deepEqual(user.getToDo(1001),expected);
     });
   });
@@ -75,8 +81,11 @@ describe('user',()=>{
       user.addToDo("Today's Work",1001,"Planning of the day");
       user.editToDoTitle(1001,"Tomorrow's Work");
       let expected = {
-        title:"Tomorrow's Work",description:"Planning of the day",
-        itemId:0,items:{},toDoId:1001}
+        title:"Tomorrow's Work",
+        description:"Planning of the day",
+        itemId:0,
+        items:{},
+        toDoId:1001}
       assert.deepEqual(user.getToDo(1001),expected);
     });
   });
@@ -172,5 +181,14 @@ describe('user',()=>{
         2:{itemText:"Running",itemId:2,status:false}}
       assert.deepEqual(user.getItems(1001),expected);
     });
+  });
+
+  describe('#getToDoDescription',()=>{
+    it('should return toDo description of given toDoId',()=>{
+      let user = new User('Madhuri');
+      user.addToDo("Today's Work",1001,"Planning of the day");
+      let expected = "Planning of the day";
+      assert.deepEqual(user.getToDoDescription(1001),expected);
+    })
   });
 });
