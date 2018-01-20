@@ -29,18 +29,14 @@ const parseCookies = text=> {
 
 let invoke = function(req,res){
   let handler = this._handlers[req.method][req.url];
-  if(!handler){
-    res.statusCode = 404;
-    res.write('File not found!');
-    res.end();
-    return;
-  }
-  handler(req,res);
+  if(handler)
+    handler(req,res);
 };
 
 const initialize = function(){
   this._handlers = {GET:{},POST:{}};
   this._preprocess = [];
+  this._postprocess=[];
 };
 
 const get = function(url,handler){
@@ -53,6 +49,10 @@ const post = function(url,handler){
 
 const use = function(handler){
   this._preprocess.push(handler);
+};
+
+const postprocess = function(handler){
+  this._postprocess.push(handler);
 };
 
 let urlIsOneOf = function(urls){
@@ -74,6 +74,10 @@ const main = function(req, res){
     });
     if(res.finished) return;
     invoke.call(this,req,res);
+    this._postprocess.forEach(middleware => {
+      if(res.finished) return;
+      middleware(req,res);
+    });
   });
 };
 
@@ -85,6 +89,7 @@ let create = () => {
   rh.get = get;
   rh.post = post;
   rh.use = use;
+  rh.postprocess = postprocess;
   return rh;
 };
 

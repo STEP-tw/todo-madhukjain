@@ -3,7 +3,7 @@ const assert = chai.assert;
 const TodoList = require('../lib/todoList.js');
 const Item = require('../lib/item.js');
 
-describe("TodoList",()=>{
+
   describe("#getTitle",()=>{
     it("should return title of the todo",()=>{
       let todo = new TodoList("Today's Work",1001,"Planning of the day");
@@ -110,4 +110,3 @@ describe("TodoList",()=>{
       assert.deepEqual(todo.getItemById(1),expected);
     });
   });
-});

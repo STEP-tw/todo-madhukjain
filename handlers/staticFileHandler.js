@@ -1,10 +1,10 @@
-let fs = require('fs');
+const fs = require('fs');
 let DefaultHandler = require('./defaultHandler.js');
 
 class StaticFileHandler extends DefaultHandler{
-  constructor(root,fs=fs) {
+  constructor(root,myFs) {
     super();
-    this.fs = fs;
+    this.fs = myFs|| fs;
     this.root = root;
   }
   execute(req,res){
@@ -31,15 +31,15 @@ class StaticFileHandler extends DefaultHandler{
     return `${this.root}${url}`
   }
   writeFileContent(req,res){
-    let extension = this.getExtension(req.url);
-    let contentType = this.getContentType(extension);
     let path = this.getFilePath(req.url);
-    res.setHeader('Content-type',contentType);
+    let extension = this.getExtension(path);
+    let contentType = this.getContentType(extension);
     if(this.fs.existsSync(path)){
       res.statusCode=200;
+      res.setHeader('Content-type',contentType);
       res.write(this.fs.readFileSync(path));
+      res.end();
     }
-    res.end();
   }
 }
 

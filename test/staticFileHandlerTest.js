@@ -10,15 +10,6 @@ fs.addFile({name:'veera.html',content:'i am human'})
   .addFile({name:'mk/index.html',content:'i am index of dummy site'})
 
 describe('staticFileHandler',()=>{
-  describe('GET /bad file',()=>{
-    it('body should be empty for not existing files',done=>{
-      let staticFileHandler=new StaticFileHandler('',fs);
-      request(staticFileHandler.getRequestHandler(),{method:'GET',url:'bad file'},(res)=>{
-        th.body_contains(res,'');
-        done();
-      });
-    });
-  });
   describe('GET / ',()=>{
     it('body should be contain content of index page ',done=>{
       let staticFileHandler=new StaticFileHandler('mk',fs);
