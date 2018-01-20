@@ -47,5 +47,20 @@ describe('todoApp',()=>{
         assert.deepEqual(todoApp.getUser('madhuri'),expected);
       });
     });
+    describe('#deleteList',()=>{
+      it('should delete todo from given todoId of given user',()=>{
+        let todoApp = new TodoApp();
+        todoApp.addUser('madhuri','admin@123');
+        todoApp.addTodo('madhuri',"Today","Planning");
+        todoApp.deleteTodo('madhuri',1001);
+        let expected = {
+          name : 'madhuri',
+          password : 'admin@123',
+          todos : {},
+          todoID :1001
+        }
+        assert.deepEqual(todoApp.getUser('madhuri'),expected);
+      });
+    });
   });
 })
