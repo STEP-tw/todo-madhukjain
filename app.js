@@ -5,6 +5,7 @@ const WebApp = require('./webapp');
 const StaticFileHandler=require('./handlers/staticFileHandler.js');
 const ResourceNotFound=require('./handlers/resourceNotFound.js');
 const AddListHandler = require('./handlers/addListHandler.js');
+const ViewListHandler = require('./handlers/viewListHandler.js');
 const TodoApp = require('./lib/todoApp');
 
 let todoApp=new TodoApp();
@@ -15,6 +16,7 @@ todoApp.addUser('veera','pwd')
 const staticFileHandler=new StaticFileHandler('./public');
 const resourceNotFound=new ResourceNotFound('resource not found');
 const addListHandler = new AddListHandler(todoApp);
+const viewListHandler = new ViewListHandler(todoApp);
 
 let toS = o=>JSON.stringify(o,null,2);
 let registered_users = [{userName:'veera',name:'veera venkata durga prasad'},
@@ -37,13 +39,12 @@ let loadUser = (req,res)=>{
     req.user = user;
   }
 };
+
 const redirectLoggedOutUserToLogin = function (req,res) {
-  let urls=['/','/index.html','/logout'];
+  let urls=['/','/index.html','/logout','/viewList','/addList'];
   if(req.urlIsOneOf(urls) && !req.user)
     res.redirect('login.html');
 }
-
-
 
 const app = WebApp.create();
 
@@ -69,7 +70,7 @@ app.get('/logout',(req,res)=>{
   delete req.user.sessionid;
   res.redirect('/login.html');
 });
-
+app.get('/viewList',viewListHandler.getRequestHandler());
 app.post('/addList',addListHandler.getRequestHandler());
 app.postprocess(staticFileHandler.getRequestHandler());
 app.postprocess(resourceNotFound.getRequestHandler())
