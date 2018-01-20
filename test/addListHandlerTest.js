@@ -12,12 +12,11 @@ describe('AddListHandler',()=>{
     beforeEach(()=>{
       todoApp=new TodoApp();
       todoApp.addUser('veera','admin@123');
-    });
+    })
     it("should add todo to given user's todo list ",()=>{
       let addListHandler=new AddListHandler(todoApp);
       request(addListHandler.getRequestHandler(),{ user:{userName:"veera"},body:{title:'something',description:'hello'}},(res)=>{
         th.should_be_redirected_to('index.html');
-        done();
       });
     })
 
