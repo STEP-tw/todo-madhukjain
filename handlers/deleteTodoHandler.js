@@ -8,9 +8,8 @@ class DeleteTodoHandler extends DefaultHandler{
   execute(req,res){
     let user = req.user;
     let todoID = req.body.todoID;
-    if(this.todoApp[user.userName]){
-      this.todoApp.deleteTodo(user.userName,todoID);
-    }
+    this.todoApp.deleteTodo(user.userName,todoID);
+    res.end()
   }
 };
 

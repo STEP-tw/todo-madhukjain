@@ -17,10 +17,16 @@ class ViewListHandler extends DefaultHandler{
     let todoIds=Object.keys(todos);
     let htmlStr='';
     todoIds.forEach(id=>{
-      htmlStr += `<b >${todos[id].getTitle()}</b>`;
+      htmlStr += `<b >${todos[id].getTitle()}</b> ${this.generateDelete(todos[id])}`;
     });
     return htmlStr;
   }
+  generateDelete(todo){
+    let htmlStr='';
+    htmlStr += `<button onclick="deleteTodo('${todo.getId()}')">delete</button>`;
+    return htmlStr;
+  }
+
 }
 
 module.exports=ViewListHandler;

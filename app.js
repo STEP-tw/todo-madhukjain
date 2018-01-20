@@ -6,6 +6,7 @@ const StaticFileHandler=require('./handlers/staticFileHandler.js');
 const ResourceNotFound=require('./handlers/resourceNotFound.js');
 const AddListHandler = require('./handlers/addListHandler.js');
 const ViewListHandler = require('./handlers/viewListHandler.js');
+const DeleteTodoHandler = require('./handlers/deleteTodoHandler.js');
 const TodoApp = require('./lib/todoApp');
 
 let todoApp=new TodoApp();
@@ -17,6 +18,7 @@ const staticFileHandler=new StaticFileHandler('./public');
 const resourceNotFound=new ResourceNotFound('resource not found');
 const addListHandler = new AddListHandler(todoApp);
 const viewListHandler = new ViewListHandler(todoApp);
+const deleteTodoHandler = new DeleteTodoHandler(todoApp);
 
 let toS = o=>JSON.stringify(o,null,2);
 let registered_users = [{userName:'veera',name:'veera venkata durga prasad'},
@@ -70,6 +72,8 @@ app.get('/logout',(req,res)=>{
   delete req.user.sessionid;
   res.redirect('/login.html');
 });
+
+app.post('/deleteList',deleteTodoHandler.getRequestHandler())
 app.get('/viewList',viewListHandler.getRequestHandler());
 app.post('/addList',addListHandler.getRequestHandler());
 app.postprocess(staticFileHandler.getRequestHandler());
