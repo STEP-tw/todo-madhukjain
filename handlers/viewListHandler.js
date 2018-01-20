@@ -26,7 +26,6 @@ class ViewListHandler extends DefaultHandler{
     htmlStr += `<button onclick="deleteTodo('${todo.getId()}')">delete</button>`;
     return htmlStr;
   }
-
 }
 
 module.exports=ViewListHandler;
