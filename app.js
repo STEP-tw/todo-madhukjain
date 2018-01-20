@@ -4,13 +4,21 @@ const timeStamp = require('./time.js').timeStamp;
 const WebApp = require('./webapp');
 const StaticFileHandler=require('./handlers/staticFileHandler.js');
 const ResourceNotFound=require('./handlers/resourceNotFound.js');
+const AddListHandler = require('./handlers/addListHandler.js');
+const TodoApp = require('./lib/todoApp');
+
+let todoApp=new TodoApp();
+
+todoApp.addUser('veera','pwd')
+.addUser('madhuri','pass');
 
 const staticFileHandler=new StaticFileHandler('./public');
 const resourceNotFound=new ResourceNotFound('resource not found');
+const addListHandler = new AddListHandler(todoApp);
+
 let toS = o=>JSON.stringify(o,null,2);
-
-let registered_users = [{userName:'veera',name:'veera venkata durga prasad'}];
-
+let registered_users = [{userName:'veera',name:'veera venkata durga prasad'},
+{userName:'veera',name:'veera venkata durga prasad'}];
 let logRequest = (req,res)=>{
   let text = ['------------------------------',
     `${timeStamp()}`,
@@ -22,7 +30,6 @@ let logRequest = (req,res)=>{
 
   console.log(`${req.method} ${req.url}`);
 }
-
 let loadUser = (req,res)=>{
   let sessionid = req.cookies.sessionid;
   let user = registered_users.find(u=>u.sessionid==sessionid);
@@ -30,13 +37,12 @@ let loadUser = (req,res)=>{
     req.user = user;
   }
 };
-
-
 const redirectLoggedOutUserToLogin = function (req,res) {
-  let urls=['/index.html','/logout'];
+  let urls=['/','/index.html','/logout'];
   if(req.urlIsOneOf(urls) && !req.user)
     res.redirect('login.html');
 }
+
 
 
 const app = WebApp.create();
@@ -63,6 +69,8 @@ app.get('/logout',(req,res)=>{
   delete req.user.sessionid;
   res.redirect('/login.html');
 });
+
+app.post('/addList',addListHandler.getRequestHandler());
 app.postprocess(staticFileHandler.getRequestHandler());
 app.postprocess(resourceNotFound.getRequestHandler())
 module.exports = app;

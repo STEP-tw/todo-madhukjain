@@ -1,12 +1,6 @@
-let EventEmitter = require('events');
-let request = function(app,options,onComplete){
+let request = function(handler,req,onComplete){
   let res_headers = {};
   let res_contents = "";
-  let req = new EventEmitter();
-  req.method = options.method;
-  req.url = options.url;
-  req.headers = options.headers||{};
-  if(options.user ) req.user=options.user;
   let res={
     end:()=>{
       res.finished = true;
@@ -17,11 +11,13 @@ let request = function(app,options,onComplete){
       };
       onComplete(result);
     },
+    redirect:(location)=>{
+      res_headers['location']=location;
+      res.statusCode=302;
+    },
     setHeader:(key,value)=> res_headers[key] = value,
     write:(text)=>res_contents+=text
   };
-  app(req,res);
-  options.body && req.emit('data',options.body);
-  req.emit('end');
+  handler(req,res);
 }
 module.exports = request;
