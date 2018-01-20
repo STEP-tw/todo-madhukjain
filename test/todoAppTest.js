@@ -62,5 +62,28 @@ describe('todoApp',()=>{
         assert.deepEqual(todoApp.getUser('madhuri'),expected);
       });
     });
+    describe('#updateTodo',()=>{
+      it('should update with given objective and description',()=>{
+        let todoApp = new TodoApp();
+        todoApp.addUser('madhuri','admin@123');
+        todoApp.addTodo('madhuri',"Today","Planning");
+        todoApp.updateTodo('madhuri',1001,'tommorow','Reading');
+        let expected = {
+          name : 'madhuri',
+          password : 'admin@123',
+          todoID :1001,
+          todos : {
+            "1001":{
+              title:"tommorow",
+              description:"Reading",
+              items :{},
+              itemId :0,
+              toDoId :1001
+          },
+        }
+      }
+        assert.deepEqual(todoApp.getUser('madhuri'),expected);
+      });
+    });
   });
-})
+});
