@@ -73,7 +73,7 @@ app.get('/logout',(req,res)=>{
   res.redirect('/login.html');
 });
 
-app.post('/deleteList',deleteTodoHandler.getRequestHandler())
+app.post('/deleteList',deleteTodoHandler.getRequestHandler());
 app.get('/viewList',viewListHandler.getRequestHandler());
 app.post('/addList',addListHandler.getRequestHandler());
 app.postprocess(staticFileHandler.getRequestHandler());

@@ -8,7 +8,7 @@ const TodoApp = require('../lib/todoApp');
 let todoApp;
 
 describe('AddListHandler',()=>{
-  describe('',()=>{
+  describe('add todo when details are enough',()=>{
     beforeEach(()=>{
       todoApp=new TodoApp();
       todoApp.addUser('veera','admin@123');
@@ -21,6 +21,19 @@ describe('AddListHandler',()=>{
     })
 
    })
+   describe(' ignores adding  todo when details are not sufficient',()=>{
+     beforeEach(()=>{
+       todoApp=new TodoApp();
+       todoApp.addUser('veera','admin@123');
+     })
+     it("should add todo to given user's todo list ",()=>{
+       let addListHandler=new AddListHandler(todoApp);
+       request(addListHandler.getRequestHandler(),{ user:{userName:"veera"},body:{description:'hello'}},(res)=>{
+         th.status_is_ok(res);
+         assert.equal(res.body,"")
+       });
+     })
 
+    })
 
  })
