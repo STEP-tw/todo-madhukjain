@@ -14,6 +14,12 @@ const deleteTodo =function(todoID){
   let deleteUrl='/deleteList';
   doXmlRequest('post',deleteUrl,()=>{window.location.reload()},`todoID=${todoID}`);
 }
+
+const viewItems=function (todoID) {
+  document.getElementById('todo-id').value=todoID;
+  document.getElementById('viewItems').submit();
+}
+
 window.onload=function () {
   doXmlRequest('get','/viewList',displayList);
 }

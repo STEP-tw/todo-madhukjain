@@ -10,13 +10,19 @@
   <link rel="stylesheet" href="/css/style.css">
   <p class="title" >ToDo List Titles</p>
   <hr/>
-  <form class="" action="/addList" method="post">
+  <form  action="/addList" method="post">
     <input type="text" name="title" value="">
     <input type="text" name="description" value="">
     <input type="submit" name="Submit" value="Add">
   </form>
-  <div class="" id="lists">
+  <div  id="lists">
 
   </div>
+  <div  id="div-viewItems">
+    <form  action="/viewItems" method="post" id="viewItems">
+      <input type="hidden" name="todoID" id="todo-id" value="">
+    </form>
+  </div>
+
 </body>
 </html>

@@ -8,8 +8,7 @@ class ViewItemsHandler extends DefaultHandler{
   execute(req,res){
     let user = req.user;
     let todoID = req.body.todoID;
-    let title = req.body.title;
-    let items=this.todoApp.getItems(user.userName,todoID,title);
+    let items=this.todoApp.getItems(user.userName,todoID);
     res.write(JSON.stringify(items));
     res.end();
   }

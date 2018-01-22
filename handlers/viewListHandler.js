@@ -15,19 +15,15 @@ class ViewListHandler extends DefaultHandler{
     let todoIds=Object.keys(todos);
     let htmlStr='';
     todoIds.forEach(id=>{
-      htmlStr += `<b >${todos[id].getTitle()}</b> ${this.generateDelete(todos[id])} ${this.generateEdit(todos[id])}`;
+      htmlStr += `<b >${todos[id].getTitle()}</b>
+       ${this.generateButton(todos[id],'deleteTodo','Delete')}
+       ${this.generateButton(todos[id],'editTodo','Edit')}
+       ${this.generateButton(todos[id],'viewItems','View Items')}`;
     });
     return htmlStr;
   }
-  generateDelete(todo){
-    let htmlStr='';
-    htmlStr += `<button onclick="deleteTodo('${todo.getId()}')">delete</button>`;
-    return htmlStr;
-  }
-  generateEdit(todo){
-    let editButton = ''
-    editButton += `<button onclick="editTodo('${todo.getId()}')">Edit</button>`;
-    return editButton;
+  generateButton(todo,fnName,btText){
+    return `<button onclick="${fnName}('${todo.getId()}')">${btText}</button>`
   }
 }
 
