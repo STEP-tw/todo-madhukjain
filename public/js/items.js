@@ -37,6 +37,10 @@ const deleteItem =function(todoID,itemID){
   doXmlRequest('post',deleteUrl,()=>{window.location.reload()},`todoID=${todoID}&itemID=${itemID}`);
 }
 
+const updateStatus =function(todoID,itemID){
+  doXmlRequest('post','/updateStatus',()=>{window.location.reload()},`todoID=${todoID}&itemID=${itemID}`);
+}
+
 const viewItems=function (todoID) {
   document.getElementById('todo-id').value=todoID;
   document.getElementById('viewItems').submit();

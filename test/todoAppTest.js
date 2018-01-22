@@ -7,7 +7,18 @@ describe('todoApp',()=>{
     describe('#getUser',()=>{
       it('should get user of given name from users',()=>{
         let todoApp = new TodoApp();
-        assert.deepEqual(todoApp.getUser('madhuri'),false);
+        assert.equal(todoApp.getUser('madhuri'),undefined);
+      });
+      it('should get user of given name from users',()=>{
+        let todoApp = new TodoApp();
+        todoApp.addUser('madhuri','admin@123');
+        let expected={
+          name:'madhuri',
+          password:'admin@123',
+          todos:{},
+          todoID:1000
+        }
+        assert.deepEqual(todoApp.getUser('madhuri'),expected);
       });
     });
     describe('#getItems',()=>{
@@ -118,7 +129,32 @@ describe('todoApp',()=>{
         todoApp.deleteItem('madhuri',1001,1);
         let expected = {}
         assert.deepEqual(todoApp.getItems('madhuri',1001),expected);
-      })
-     })
+      });
+    });
+    describe('#updateStatus',()=>{
+      it('should mark item as true',()=>{
+        let todoApp = new TodoApp();
+        todoApp.addUser('madhuri','admin@123');
+        todoApp.addTodo('madhuri',"Today","Planning");
+        todoApp.addItem('madhuri',1001,'Good morning');
+        todoApp.updateStatus('madhuri',1001,1);
+        let expected = {
+          1:{objective:'Good morning',status:true,itemId:1}
+        }
+        assert.deepEqual(todoApp.getItems('madhuri',1001),expected);
+      });
+      it('should mark item as false',()=>{
+        let todoApp = new TodoApp();
+        todoApp.addUser('madhuri','admin@123');
+        todoApp.addTodo('madhuri',"Today","Planning");
+        todoApp.addItem('madhuri',1001,'Good morning',true);
+        todoApp.updateStatus('madhuri',1001,1);
+        let expected = {
+          1:{objective:'Good morning',status:false,itemId:1}
+        }
+        assert.deepEqual(todoApp.getItems('madhuri',1001),expected);
+      });
+
+    });
   });
 });

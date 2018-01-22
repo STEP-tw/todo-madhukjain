@@ -18,9 +18,14 @@ class ViewItemsHandler extends DefaultHandler{
     let htmlStr='';
     itemsID.forEach(id=>{
       let style='text-decoration:'
-      if(items[id].getStatus()) style += 'line-through'
-      htmlStr += `<b style=${style}>${items[id].getObjective()}</b>
-      ${this.generateButton(todoID,items[id],'deleteItem','Delete')}`;
+      let status='Done';
+      if(items[id].getStatus()){
+         style += 'red line-through';
+         status='undone';
+       }
+      htmlStr += `<p style="${style}">${items[id].getObjective()}</p>
+      ${this.generateButton(todoID,items[id],'deleteItem','Delete')}
+      ${this.generateButton(todoID,items[id],'updateStatus',status)}`;
     });
     return htmlStr;
   }
