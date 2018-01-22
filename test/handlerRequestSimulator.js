@@ -14,6 +14,7 @@ let request = function(handler,req,onComplete){
     redirect:(location)=>{
       res_headers['location']=location;
       res.statusCode=302;
+      res.end();
     },
     setHeader:(key,value)=> res_headers[key] = value,
     write:(text)=>res_contents+=text

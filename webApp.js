@@ -8,9 +8,15 @@ const accumulate = (o,kv)=> {
   return o;
 };
 
+
 const parseBody = function(text){
   return text && text.split('&').map(toKeyValue).reduce(accumulate,{}) || {};
 };
+
+const parseQuery = function(url){
+  let urlOpts = url.split('?');
+  return {url:urlOpts[0],query:parseBody(urlOpts[1])}
+}
 
 let redirect = function(path){
   console.log(`redirecting to ${path}`);
@@ -63,6 +69,9 @@ const main = function(req, res){
   res.redirect = redirect.bind(res);
   req.urlIsOneOf = urlIsOneOf.bind(req);
   req.cookies = parseCookies(req.headers.cookie || '');
+  let queryOpts=parseQuery(req.url);
+  req.originUrl=req.url;
+  req.url=queryOpts.url;
   let content="";
   req.on('data',data => content+=data.toString());
   req.on('end',() => {

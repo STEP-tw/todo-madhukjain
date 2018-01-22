@@ -24,7 +24,7 @@ const viewItemsHandler = new ViewItemsHandler(todoApp);
 
 let toS = o=>JSON.stringify(o,null,2);
 let registered_users = [{userName:'veera',name:'veera venkata durga prasad'},
-{userName:'veera',name:'veera venkata durga prasad'}];
+{userName:'madhuri',name:'jain'}];
 let logRequest = (req,res)=>{
   let text = ['------------------------------',
     `${timeStamp()}`,
@@ -45,7 +45,7 @@ let loadUser = (req,res)=>{
 };
 
 const redirectLoggedOutUserToLogin = function (req,res) {
-  let urls=['/','/index.html','/logout','/viewList','/addList'];
+  let urls=['/','/index.html','/logout','/viewList','/addList','/viewItems','/todoItem.html'];
   if(req.urlIsOneOf(urls) && !req.user)
     res.redirect('login.html');
 }

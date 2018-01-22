@@ -12,7 +12,6 @@ class ViewItemsHandler extends DefaultHandler{
     res.write(JSON.stringify(items));
     res.end();
   }
-
 }
 
 module.exports= ViewItemsHandler;
