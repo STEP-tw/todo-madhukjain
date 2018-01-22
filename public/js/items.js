@@ -14,7 +14,10 @@ const accumulate = (o,kv)=> {
   return o;
 };
 
-
+const addItem = function () {
+  let objective = document.getElementById('objective').value;
+  doXmlRequest('post','/addItem',function(){window.location.reload()},`todoID=${id}&title=${objective}&redirect=${window.location.href}`);
+}
 
 const parseBody = function(text){
   return text && text.split('&').map(toKeyValue).reduce(accumulate,{}) || {};
@@ -29,11 +32,9 @@ const displayItems=function () {
   document.getElementById('items').innerHTML=this.response;
 }
 
-
-
-const deleteTodo =function(todoID){
-  let deleteUrl='/deleteList';
-  doXmlRequest('post',deleteUrl,()=>{window.location.reload()},`todoID=${todoID}`);
+const deleteItem =function(todoID,itemID){
+  let deleteUrl='/deleteItem';
+  doXmlRequest('post',deleteUrl,()=>{window.location.reload()},`todoID=${todoID}&itemID=${itemID}`);
 }
 
 const viewItems=function (todoID) {
@@ -43,6 +44,6 @@ const viewItems=function (todoID) {
 
 window.onload=function () {
   let url=window.location.href;
-  let id=parseQuery(url).query.todoID;
+  id=parseQuery(url).query.todoID;
   doXmlRequest('post','/viewItems',displayItems,`todoID=${id}`);
 }

@@ -70,7 +70,7 @@ const main = function(req, res){
   req.urlIsOneOf = urlIsOneOf.bind(req);
   req.cookies = parseCookies(req.headers.cookie || '');
   let queryOpts=parseQuery(req.url);
-  req.originUrl=req.url;
+  req.originalUrl=req.url;
   req.url=queryOpts.url;
   let content="";
   req.on('data',data => content+=data.toString());

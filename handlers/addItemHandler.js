@@ -10,7 +10,7 @@ class AddItemHandler extends DefaultHandler{
     let todoID = req.body.todoID;
     let title = req.body.title;
     this.todoApp.addItem(user.userName,todoID,title);
-    res.redirect(req.originalUrl);
+    res.redirect(`/todoItem.html?todoID=${todoID}`);
   }
 }
 module.exports=AddItemHandler;

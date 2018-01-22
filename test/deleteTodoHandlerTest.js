@@ -17,7 +17,6 @@ describe('DeleteTodoHandler',()=>{
       let deleteTodoHandler = new DeleteTodoHandler(todoApp);
       request(deleteTodoHandler.getRequestHandler(),{user:{userName:"madhuri"},body:{todoID:1001}},(res) =>{
         assert.equal(res.statusCode,200);
-        
       });
     });
   });

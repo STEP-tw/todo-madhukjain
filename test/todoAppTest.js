@@ -109,5 +109,16 @@ describe('todoApp',()=>{
         assert.deepEqual(todoApp.getItems('madhuri',1001),expected);
       });
     });
+    describe('#deleteItem',()=>{
+      it('should delete item from given todoID of given user',()=>{
+        let todoApp = new TodoApp();
+        todoApp.addUser('madhuri','admin@123');
+        todoApp.addTodo('madhuri',"Today","Planning");
+        todoApp.addItem('madhuri',1001,'Good morning');
+        todoApp.deleteItem('madhuri',1001,1);
+        let expected = {}
+        assert.deepEqual(todoApp.getItems('madhuri',1001),expected);
+      })
+     })
   });
 });

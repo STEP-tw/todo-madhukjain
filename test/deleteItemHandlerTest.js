@@ -1,6 +1,6 @@
 const chai = require('chai');
 const assert = chai.assert;
-const AddItemHandler = require('../handlers/addItemHandler.js');
+const DeleteItemHandler = require('../handlers/deleteItemHandler.js');
 const request = require('./handlerRequestSimulator.js');
 const th = require('./testHelper.js');
 const TodoApp = require('../lib/todoApp');
@@ -15,13 +15,14 @@ describe('AddItemHandler',()=>{
       todoApp.addTodo('madhuri','today','planning');
     });
     it('should add given item to given todoID of given user',(done)=>{
-      let addItemHandler = new AddItemHandler(todoApp);
+      let deleteItemHandler = new DeleteItemHandler(todoApp);
       let options ={
         user:{userName:"madhuri"},
-        body:{todoID:1001,title:'good morning'}
+        body:{todoID:1001,itemID:1}
       };
-      request(addItemHandler.getRequestHandler(),options,(res) =>{
-        th.should_be_redirected_to(res,'/todoItem.html?todoID=1001');
+      request(deleteItemHandler.getRequestHandler(),options,(res) =>{
+        res.statusCode = 200;
+        th.body_contains(res,'');
         done();
       });
     });

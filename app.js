@@ -7,7 +7,9 @@ const ResourceNotFound=require('./handlers/resourceNotFound.js');
 const AddListHandler = require('./handlers/addListHandler.js');
 const ViewListHandler = require('./handlers/viewListHandler.js');
 const DeleteTodoHandler = require('./handlers/deleteTodoHandler.js');
+const DeleteItemHandler = require('./handlers/deleteItemHandler.js');
 const ViewItemsHandler = require('./handlers/viewItemsHandler.js');
+const AddItemHandler = require('./handlers/addItemHandler.js');
 const TodoApp = require('./lib/todoApp');
 
 let todoApp=new TodoApp();
@@ -20,7 +22,9 @@ const resourceNotFound=new ResourceNotFound('resource not found');
 const addListHandler = new AddListHandler(todoApp);
 const viewListHandler = new ViewListHandler(todoApp);
 const deleteTodoHandler = new DeleteTodoHandler(todoApp);
+const deleteItemHandler = new DeleteItemHandler(todoApp);
 const viewItemsHandler = new ViewItemsHandler(todoApp);
+const addItemHandler = new AddItemHandler(todoApp);
 
 let toS = o=>JSON.stringify(o,null,2);
 let registered_users = [{userName:'veera',name:'veera venkata durga prasad'},
@@ -75,6 +79,8 @@ app.get('/logout',(req,res)=>{
   res.redirect('/login.html');
 });
 
+app.post('/deleteItem',deleteItemHandler.getRequestHandler());
+app.post('/addItem',addItemHandler.getRequestHandler());
 app.post('/viewItems',viewItemsHandler.getRequestHandler());
 app.post('/deleteList',deleteTodoHandler.getRequestHandler());
 app.get('/viewList',viewListHandler.getRequestHandler());
