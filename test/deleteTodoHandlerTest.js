@@ -15,7 +15,8 @@ describe('DeleteTodoHandler',()=>{
     });
     it('should delete todo of given todoID of gievn user',()=>{
       let deleteTodoHandler = new DeleteTodoHandler(todoApp);
-      request(deleteTodoHandler.getRequestHandler(),{user:{userName:"madhuri"},body:{todoID:1001}},(res) =>{
+      let options = {user:{userName:"madhuri"},body:{todoID:1001}};
+      request(deleteTodoHandler.getRequestHandler(),options,(res) =>{
         assert.equal(res.statusCode,200);
       });
     });

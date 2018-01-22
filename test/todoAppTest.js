@@ -154,7 +154,19 @@ describe('todoApp',()=>{
         }
         assert.deepEqual(todoApp.getItems('madhuri',1001),expected);
       });
-
+    });
+    describe('#updateItem',()=>{
+      it('should update item of given todoID of given user',()=>{
+        let todoApp = new TodoApp();
+        todoApp.addUser('madhuri','admin@123');
+        todoApp.addTodo('madhuri',"Today","Planning");
+        todoApp.addItem('madhuri',1001,'Good morning');
+        todoApp.updateItem('madhuri',1001,1,'good bye');
+        let expected = {
+          1:{objective:'good bye',status:false,itemId:1}
+        }
+        assert.deepEqual(todoApp.getItems('madhuri',1001),expected);
+      });
     });
   });
 });

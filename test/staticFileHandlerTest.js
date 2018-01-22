@@ -13,7 +13,8 @@ describe('staticFileHandler',()=>{
   describe('GET / ',()=>{
     it('body should be contain content of index page ',done=>{
       let staticFileHandler=new StaticFileHandler('mk',fs);
-      request(staticFileHandler.getRequestHandler(),{method:'GET',url:'/'},(res)=>{
+      let options = {method:'GET',url:'/'}
+      request(staticFileHandler.getRequestHandler(),options,(res)=>{
         th.body_contains(res,'i am index of dummy site');
         done();
       });
@@ -22,14 +23,16 @@ describe('staticFileHandler',()=>{
   describe('existing file ',()=>{
     it('body should contain content',done=>{
       let staticFileHandler=new StaticFileHandler('mk',fs);
-      request(staticFileHandler.getRequestHandler(),{method:'GET',url:'/madhuri.css'},(res)=>{
+      let options = {method:'GET',url:'/madhuri.css'}
+      request(staticFileHandler.getRequestHandler(),options,(res)=>{
         th.body_contains(res,'hello');
         done();
       });
     });
     it('header should contain contentType',done=>{
       let staticFileHandler=new StaticFileHandler('',fs);
-      request(staticFileHandler.getRequestHandler(),{method:'GET',url:'veera.html'},(res)=>{
+      let options = {method:'GET',url:'veera.html'}
+      request(staticFileHandler.getRequestHandler(),options,(res)=>{
         th.body_contains(res,'i am human');
         assert.equal(res.headers['Content-type'],'text/html');
         done();

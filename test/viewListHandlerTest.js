@@ -16,7 +16,8 @@ describe('ViewListHandler',()=>{
     });
     it("should return todos from given user's todoList",()=>{
       let viewListHandler = new ViewListHandler(todoApp);
-      request(viewListHandler.getRequestHandler(),{user:{userName:"madhuri"}},(res) =>{
+      let options = {user:{userName:"madhuri"}}
+      request(viewListHandler.getRequestHandler(),options,(res) =>{
         assert.equal(res.statusCode,200);
         th.body_contains(res,'today');
       });

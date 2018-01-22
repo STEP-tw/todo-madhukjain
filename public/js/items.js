@@ -33,8 +33,7 @@ const displayItems=function () {
 }
 
 const deleteItem =function(todoID,itemID){
-  let deleteUrl='/deleteItem';
-  doXmlRequest('post',deleteUrl,()=>{window.location.reload()},`todoID=${todoID}&itemID=${itemID}`);
+  doXmlRequest('post','/deleteItem',()=>{window.location.reload()},`todoID=${todoID}&itemID=${itemID}`);
 }
 
 const updateStatus =function(todoID,itemID){

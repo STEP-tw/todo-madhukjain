@@ -9,7 +9,8 @@ describe('staticFileHandler',()=>{
   describe('GET /bad',()=>{
     it('should respond with 404',done=>{
       let resourceNotFound=new ResourceNotFound('I dont the way');
-      request(resourceNotFound.getRequestHandler(),{method:'GET',url:'/'},(res)=>{
+      let options = {method:'GET',url:'/'}
+      request(resourceNotFound.getRequestHandler(),options,(res)=>{
         assert.equal(res.statusCode,404);
         done();
       });

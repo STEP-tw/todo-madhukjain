@@ -12,28 +12,34 @@ describe('AddListHandler',()=>{
     beforeEach(()=>{
       todoApp=new TodoApp();
       todoApp.addUser('veera','admin@123');
-    })
+    });
     it("should add todo to given user's todo list ",()=>{
       let addListHandler=new AddListHandler(todoApp);
-      request(addListHandler.getRequestHandler(),{ user:{userName:"veera"},body:{title:'something',description:'hello'}},(res)=>{
+      let options = {
+        user:{userName:"veera"},
+        body:{title:'something',
+        description:'hello'}
+      }
+      request(addListHandler.getRequestHandler(),options,(res)=>{
         th.should_be_redirected_to(res,'index.html');
       });
-    })
-
-   })
-   describe(' ignores adding  todo when details are not sufficient',()=>{
-     beforeEach(()=>{
-       todoApp=new TodoApp();
-       todoApp.addUser('veera','admin@123');
-     })
-     it("should add todo to given user's todo list ",()=>{
-       let addListHandler=new AddListHandler(todoApp);
-       request(addListHandler.getRequestHandler(),{ user:{userName:"veera"},body:{description:'hello'}},(res)=>{
-         th.status_is_ok(res);
-         assert.equal(res.body,"")
-       });
-     })
-
-    })
-
- })
+    });
+  });
+  describe(' ignores adding  todo when details are not sufficient',()=>{
+    beforeEach(()=>{
+      todoApp=new TodoApp();
+      todoApp.addUser('madhuri','admin@123');
+    });
+    it("should add todo to given user's todo list ",()=>{
+      let addListHandler=new AddListHandler(todoApp);
+      let options = {
+        user:{userName:"madhuri"},
+        body:{description:'hello'}
+      }
+      request(addListHandler.getRequestHandler(),options,(res)=>{
+        th.status_is_ok(res);
+        assert.equal(res.body,"")
+      });
+    });
+  });
+});
