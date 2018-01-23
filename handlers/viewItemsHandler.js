@@ -1,4 +1,4 @@
-let DefaultHandler = require('./defaultHandler.js');
+const DefaultHandler = require('./defaultHandler.js');
 
 class ViewItemsHandler extends DefaultHandler{
   constructor(todoApp) {
@@ -6,23 +6,23 @@ class ViewItemsHandler extends DefaultHandler{
     this.todoApp = todoApp;
   }
   execute(req,res){
-    let user = req.user;
-    let todoID = req.body.todoID;
-    let items=this.todoApp.getItems(user.userName,todoID);
+    const user = req.user;
+    const todoID = req.body.todoID;
+    const items=this.todoApp.getItems(user.userName,todoID);
     res.setHeader('Content-Type','text/html');
     res.write(this.toHtml(todoID,items));
     res.end();
   }
   toHtml(todoID,items){
-    let itemsID=Object.keys(items);
+    const itemsID=Object.keys(items);
     let htmlStr='';
-    itemsID.forEach(id=>{
-      let style='text-decoration:'
+    itemsID.forEach((id) => {
+      let style='text-decoration:';
       let status='Done';
       if(items[id].getStatus()){
-         style += 'red line-through';
-         status='undone';
-       }
+        style += 'red line-through';
+        status='undone';
+      }
       htmlStr += `<p style="${style}">${items[id].getObjective()}</p>
       ${this.generateButton(todoID,items[id],'deleteItem','Delete')}
       ${this.generateButton(todoID,items[id],'updateStatus',status)}`;
@@ -30,7 +30,7 @@ class ViewItemsHandler extends DefaultHandler{
     return htmlStr;
   }
   generateButton(todoID,item,fnName,btText){
-    return `<button onclick="${fnName}('${todoID}','${item.getId()}')">${btText}</button>`
+    return `<button onclick="${fnName}('${todoID}','${item.getId()}')">${btText}</button>`;
   }
 }
 

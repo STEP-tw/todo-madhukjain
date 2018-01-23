@@ -1,4 +1,4 @@
-let DefaultHandler = require('./defaultHandler.js');
+const DefaultHandler = require('./defaultHandler.js');
 
 class UpdateStatusHandler extends DefaultHandler{
   constructor(todoApp) {
@@ -6,9 +6,9 @@ class UpdateStatusHandler extends DefaultHandler{
     this.todoApp = todoApp;
   }
   execute(req,res){
-    let user = req.user;
-    let todoID = req.body.todoID;
-    let itemID = req.body.itemID;
+    const user = req.user;
+    const todoID = req.body.todoID;
+    const itemID = req.body.itemID;
     this.todoApp.updateStatus(user.userName,todoID,itemID);
     res.end();
   }

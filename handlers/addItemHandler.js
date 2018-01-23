@@ -1,4 +1,4 @@
-let DefaultHandler = require('./defaultHandler.js');
+const DefaultHandler = require('./defaultHandler.js');
 
 class AddItemHandler extends DefaultHandler{
   constructor(todoApp) {
@@ -6,9 +6,9 @@ class AddItemHandler extends DefaultHandler{
     this.todoApp=todoApp;
   }
   execute(req,res){
-    let user = req.user;
-    let todoID = req.body.todoID;
-    let title = req.body.title;
+    const user = req.user;
+    const todoID = req.body.todoID;
+    const title = req.body.title;
     this.todoApp.addItem(user.userName,todoID,title);
     res.redirect(`/todoItem.html?todoID=${todoID}`);
   }

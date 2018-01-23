@@ -1,4 +1,4 @@
-let DefaultHandler = require('./defaultHandler.js');
+const DefaultHandler = require('./defaultHandler.js');
 
 class ResourceNotFound extends DefaultHandler{
   constructor(message) {
@@ -7,7 +7,7 @@ class ResourceNotFound extends DefaultHandler{
   }
   execute(req,res){
     res.statusCode=404;
-    res.write(this.message.toString())
+    res.write(this.message.toString());
     res.end();
   }
 

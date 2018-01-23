@@ -1,0 +1,122 @@
+{
+  "env": {
+    "browser": true,
+    "amd": true,
+    "es6": true
+  },
+
+  "settings": {
+  },
+  "globals": {
+    "it": true,
+    "describe": true,
+    "xdescribe": true,
+    "expect": true,
+    "beforeEach": true,
+    "afterEach": true,
+    "afterAll": true,
+    "beforeAll": true,
+    "xit": true,
+    "spyOn": true,
+    "jasmine": true,
+    "angular": true,
+    "module": true
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": false
+    }
+  },
+  "rules": {
+    "arrow-parens": [
+      "error"
+    ],
+    "arrow-spacing": [
+      "error"
+    ],
+    "no-const-assign": [
+      "error"
+    ],
+    "no-var": [
+      "error"
+    ],
+    "object-shorthand": [
+      "error"
+    ],
+    "prefer-arrow-callback": [
+      "error"
+    ],
+    "prefer-const": [
+      "error"
+    ],
+    "prefer-template": [
+      "error"
+    ],
+    "block-scoped-var": [
+      "off"
+    ],
+    "eol-last": [
+      "error"
+    ],
+    "indent": [
+      "error",
+      2
+    ],
+    "eqeqeq": [
+      "off",
+      "always"
+    ],
+    "camelcase": [
+      "off"
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "quotes": [
+      "off"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "no-unused-vars": [
+      "error",
+      {
+        "args": "all",
+        "vars": "all",
+        "argsIgnorePattern": "^_."
+      }
+    ],
+    "no-empty": [
+      "error"
+    ],
+    "curly": [
+      "error"
+    ],
+    "no-nested-ternary": [
+      "error"
+    ],
+    "react/display-name": [
+      "off"
+    ],
+    "react/no-unknown-property": [
+      "off"
+    ],
+    "react/jsx-key": [
+      "off"
+    ],
+    "react/jsx-no-target-blank": [
+      "off"
+    ],
+    "react/no-unescaped-entities": [
+      "off"
+    ],
+    "eqeqeq":[
+      "off"
+    ],
+    "no-unused-vars":[
+      "off"
+    ]
+  }
+}

@@ -1,4 +1,4 @@
-let DefaultHandler = require('./defaultHandler.js');
+const DefaultHandler = require('./defaultHandler.js');
 
 class ViewListHandler extends DefaultHandler{
   constructor(todoApp) {
@@ -6,15 +6,15 @@ class ViewListHandler extends DefaultHandler{
     this.todoApp=todoApp;
   }
   execute(req,res){
-    let user=req.user;
-      let todos=this.todoApp.getTodos(user.userName);
-      res.write(this.toHtml(todos));
-      res.end();
+    const user=req.user;
+    const todos=this.todoApp.getTodos(user.userName);
+    res.write(this.toHtml(todos));
+    res.end();
   }
   toHtml(todos){
-    let todoIds=Object.keys(todos);
+    const todoIds=Object.keys(todos);
     let htmlStr='';
-    todoIds.forEach(id=>{
+    todoIds.forEach((id) => {
       htmlStr += `<b >${todos[id].getTitle()}</b>
        ${this.generateButton(todos[id],'deleteTodo','Delete')}
        ${this.generateButton(todos[id],'editTodo','Edit')}
@@ -23,7 +23,7 @@ class ViewListHandler extends DefaultHandler{
     return htmlStr;
   }
   generateButton(todo,fnName,btText){
-    return `<button onclick="${fnName}('${todo.getId()}')">${btText}</button>`
+    return `<button onclick="${fnName}('${todo.getId()}')">${btText}</button>`;
   }
 }
 

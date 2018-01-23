@@ -9,7 +9,7 @@ class FsSimulator {
   existsSync(path){
     return this.files[path]?true:false;
   }
-  readFileSync(path,encoding){
+  readFileSync(path){
     return this.files[path];
   }
 }

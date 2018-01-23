@@ -1,9 +1,9 @@
-const toKeyValue = kv=>{
-  let parts = kv.split('=');
+const toKeyValue = (kv) => {
+  const parts = kv.split('=');
   return {key:parts[0].trim(),value:parts[1].trim()};
 };
 
-const accumulate = (o,kv)=> {
+const accumulate = (o,kv) => {
   o[kv.key] = kv.value;
   return o;
 };
@@ -14,18 +14,18 @@ const parseBody = function(text){
 };
 
 const parseQuery = function(url){
-  let urlOpts = url.split('?');
-  return {url:urlOpts[0],query:parseBody(urlOpts[1])}
-}
+  const urlOpts = url.split('?');
+  return {url:urlOpts[0],query:parseBody(urlOpts[1])};
+};
 
-let redirect = function(path){
+const redirect = function(path){
   console.log(`redirecting to ${path}`);
   this.statusCode = 302;
   this.setHeader('location',path);
   this.end();
 };
 
-const parseCookies = text=> {
+const parseCookies = (text) => {
   try {
     return text && text.split(';').map(toKeyValue).reduce(accumulate,{}) || {};
   }catch(e){
@@ -33,10 +33,10 @@ const parseCookies = text=> {
   }
 };
 
-let invoke = function(req,res){
-  let handler = this._handlers[req.method][req.url];
+const invoke = function(req,res){
+  const handler = this._handlers[req.method][req.url];
   if(handler)
-    handler(req,res);
+  {handler(req,res);}
 };
 
 const initialize = function(){
@@ -61,7 +61,7 @@ const postprocess = function(handler){
   this._postprocess.push(handler);
 };
 
-let urlIsOneOf = function(urls){
+const urlIsOneOf = function(urls){
   return urls.includes(this.url);
 };
 
@@ -69,31 +69,31 @@ const main = function(req, res){
   res.redirect = redirect.bind(res);
   req.urlIsOneOf = urlIsOneOf.bind(req);
   req.cookies = parseCookies(req.headers.cookie || '');
-  let queryOpts=parseQuery(req.url);
+  const queryOpts=parseQuery(req.url);
   req.originalUrl=req.url;
   req.url=queryOpts.url;
   let content="";
-  req.on('data',data => content+=data.toString());
+  req.on('data',(data) => content+=data.toString());
   req.on('end',() => {
     req.body = parseBody(content);
     content="";
-    this._preprocess.forEach(middleware => {
-      if(res.finished) return;
+    this._preprocess.forEach((middleware) => {
+      if(res.finished) {return;}
       middleware(req,res);
     });
-    if(res.finished) return;
+    if(res.finished) {return;}
     invoke.call(this,req,res);
-    this._postprocess.forEach(middleware => {
-      if(res.finished) return;
+    this._postprocess.forEach((middleware) => {
+      if(res.finished) {return;}
       middleware(req,res);
     });
   });
 };
 
-let create = () => {
-  let rh = (req,res) => {
+const create = () => {
+  const rh = (req,res) => {
     main.call(rh,req,res);
-  }
+  };
   initialize.call(rh);
   rh.get = get;
   rh.post = post;

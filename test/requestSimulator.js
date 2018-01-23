@@ -1,27 +1,27 @@
-let EventEmitter = require('events');
-let request = function(app,options,onComplete){
-  let res_headers = {};
+const EventEmitter = require('events');
+const request = function(app,options,onComplete){
+  const res_headers = {};
   let res_contents = "";
-  let req = new EventEmitter();
+  const req = new EventEmitter();
   req.method = options.method;
   req.url = options.url;
   req.headers = options.headers||{};
-  if(options.user ) req.user=options.user;
-  let res={
-    end:()=>{
+  if(options.user ) {req.user=options.user;}
+  const res={
+    end:() => {
       res.finished = true;
-      let result = {
+      const result = {
         statusCode:res.statusCode||200,
         headers:res_headers,
         body:res_contents
       };
       onComplete(result);
     },
-    setHeader:(key,value)=> res_headers[key] = value,
-    write:(text)=>res_contents+=text
+    setHeader:(key,value) => res_headers[key] = value,
+    write:(text) => res_contents+=text
   };
   app(req,res);
   options.body && req.emit('data',options.body);
   req.emit('end');
-}
+};
 module.exports = request;

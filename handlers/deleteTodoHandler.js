@@ -1,4 +1,4 @@
-let DefaultHandler = require('./defaultHandler.js');
+const DefaultHandler = require('./defaultHandler.js');
 
 class DeleteTodoHandler extends DefaultHandler{
   constructor(todoApp) {
@@ -6,10 +6,10 @@ class DeleteTodoHandler extends DefaultHandler{
     this.todoApp=todoApp;
   }
   execute(req,res){
-    let user = req.user;
-    let todoID = req.body.todoID;
+    const user = req.user;
+    const todoID = req.body.todoID;
     this.todoApp.deleteTodo(user.userName,todoID);
-    res.end()
+    res.end();
   }
 };
 

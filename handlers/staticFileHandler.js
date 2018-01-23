@@ -1,5 +1,5 @@
 const fs = require('fs');
-let DefaultHandler = require('./defaultHandler.js');
+const DefaultHandler = require('./defaultHandler.js');
 
 class StaticFileHandler extends DefaultHandler{
   constructor(root,myFs) {
@@ -11,29 +11,29 @@ class StaticFileHandler extends DefaultHandler{
     this.writeFileContent(req,res);
   }
   getExtension(url) {
-    let extension = url.slice(url.lastIndexOf('.'));
+    const extension = url.slice(url.lastIndexOf('.'));
     return extension;
   }
   getContentType(extension){
-    let contentType = {
+    const contentType = {
       ".html": "text/html",
       ".css": "text/css",
       '.js':'text/javascript',
       ".jpg":"image/jpg",
       ".jpeg":"image/jpeg"
-    }
+    };
     return contentType[extension];
   }
   getFilePath(url){
     if (url == '/'){
       return `${this.root}/index.html`;
     }
-    return `${this.root}${url}`
+    return `${this.root}${url}`;
   }
   writeFileContent(req,res){
-    let path = this.getFilePath(req.url);
-    let extension = this.getExtension(path);
-    let contentType = this.getContentType(extension);
+    const path = this.getFilePath(req.url);
+    const extension = this.getExtension(path);
+    const contentType = this.getContentType(extension);
     if(this.fs.existsSync(path)){
       res.statusCode=200;
       res.setHeader('Content-type',contentType);

@@ -1,24 +1,24 @@
-let request = function(handler,req,onComplete){
-  let res_headers = {};
+const request = function(handler,req,onComplete){
+  const res_headers = {};
   let res_contents = "";
-  let res={
-    end:()=>{
+  const res={
+    end:() => {
       res.finished = true;
-      let result = {
+      const result = {
         statusCode:res.statusCode||200,
         headers:res_headers,
         body:res_contents
       };
       onComplete(result);
     },
-    redirect:(location)=>{
+    redirect:(location) => {
       res_headers['location']=location;
       res.statusCode=302;
       res.end();
     },
-    setHeader:(key,value)=> res_headers[key] = value,
-    write:(text)=>res_contents+=text
+    setHeader:(key,value) => res_headers[key] = value,
+    write:(text) => res_contents+=text
   };
   handler(req,res);
-}
+};
 module.exports = request;
