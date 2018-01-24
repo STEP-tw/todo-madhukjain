@@ -20,6 +20,10 @@ const viewItems=function (todoID) {
   document.getElementById('viewItems').submit();
 };
 
+const editTodo = function(todoID){
+  document.getElementById('editTodo').style.display = "block";
+};
+
 window.onload=function () {
   doXmlRequest('get','/viewList',displayList);
 };

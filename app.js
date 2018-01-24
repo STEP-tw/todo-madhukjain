@@ -1,7 +1,9 @@
 const fs = require('fs');
-const http = require('http');
 const timeStamp = require('./time.js').timeStamp;
-const WebApp = require('./webapp');
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+/* ================================*/
 const StaticFileHandler = require('./handlers/staticFileHandler.js');
 const ResourceNotFound = require('./handlers/resourceNotFound.js');
 const AddListHandler = require('./handlers/addListHandler.js');
@@ -14,10 +16,11 @@ const UpdateStatusHandler = require('./handlers/updateStatusHandler.js');
 const UpdateItemHandler = require('./handlers/updateItemHandler.js');
 const TodoApp = require('./lib/todoApp');
 
+
 const todoApp=new TodoApp();
 
 todoApp.addUser('veera','pwd')
-  .addUser('madhuri','pass');
+    .addUser('madhuri','pass');
 
 const staticFileHandler = new StaticFileHandler('./public');
 const resourceNotFound = new ResourceNotFound('resource not found');
@@ -30,41 +33,63 @@ const addItemHandler = new AddItemHandler(todoApp);
 const updateStatusHandler = new UpdateStatusHandler(todoApp);
 const updateItemHandler = new UpdateItemHandler(todoApp);
 
+/*=========================*/
+
 const toS = (o) => JSON.stringify(o,null,2);
 const registered_users = [
   {userName:'veera',name:'veera venkata durga prasad'},
   {userName:'madhuri',name:'jain'}];
 
-const logRequest = (req,res) => {
+const logRequest = (req,res,next) => {
   const text = ['------------------------------',
     `${timeStamp()}`,
     `${req.method} ${req.url}`,
     `HEADERS=> ${toS(req.headers)}`,
     `COOKIES=> ${toS(req.cookies)}`,
     `BODY=> ${toS(req.body)}`,''].join('\n');
-  fs.appendFile('request.log',text,() => {});
-  console.log(`${req.method} ${req.url}`);
+  // fs.appendFile('request.log',text,() => {});
+  console.log(`${req.method} ${req.url} `);
+
+  next();
 };
-const loadUser = (req,res) => {
+
+
+
+const loadUser = (req,res,next) => {
   const sessionid = req.cookies.sessionid;
   const user = registered_users.find((u) => u.sessionid==sessionid);
   if(sessionid && user){
     req.user = user;
   }
+  next();
 };
 
-const redirectLoggedOutUserToLogin = function (req,res) {
-  const urls = ['/','/index.html','/logout','/viewList','/addList','/viewItems','/todoItem.html'];
-  if(req.urlIsOneOf(urls) && !req.user)
-  {res.redirect('login.html');}
+const redirectLoggedOutUserToLogin = function (req,res,next) {
+  let urls=['/','/index.html','/logout','/viewList','/addList','/viewItems','/todoItem.html'];
+  if(urls.includes(req.url)&&!req.user) {
+    res.redirect('login.html');
+    return ;
+  }
+  next();
 };
 
-const app = WebApp.create();
+const app = express();
 
-app.use(logRequest);
+
+
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true,type:()=>true }));
+
 app.use(loadUser);
 app.use(redirectLoggedOutUserToLogin);
+app.use(logRequest);
 
+app.get('/',(req,res,next)=>{
+  req.url='/index.html';
+  next();
+})
+
+app.use(express.static('public'));
 app.post('/login',(req,res) => {
   const user = registered_users.find((u) => u.userName==req.body.userName);
   if(!user) {
@@ -82,7 +107,6 @@ app.get('/logout',(req,res) => {
   delete req.user.sessionid;
   res.redirect('/login.html');
 });
-
 app.post('/updateItem',updateItemHandler.getRequestHandler());
 app.post('/updateStatus',updateStatusHandler.getRequestHandler());
 app.post('/deleteItem',deleteItemHandler.getRequestHandler());
@@ -91,6 +115,4 @@ app.post('/viewItems',viewItemsHandler.getRequestHandler());
 app.post('/deleteList',deleteTodoHandler.getRequestHandler());
 app.get('/viewList',viewListHandler.getRequestHandler());
 app.post('/addList',addListHandler.getRequestHandler());
-app.postprocess(staticFileHandler.getRequestHandler());
-app.postprocess(resourceNotFound.getRequestHandler());
 module.exports = app;

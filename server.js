@@ -3,6 +3,11 @@ const fs = require('fs');
 const PORT = 9099;
 const app = require('./app.js');
 
-const server = http.createServer(app);
+
+
+const server = http.createServer((req,res)=>{
+    app(req,res);
+});
 server.on('error',(e) => console.error('**error**',e.message));
-server.listen(PORT,(e) => console.log(`server listening at ${PORT}`));
+server.on('listening',() => console.log(`server listening at ${server.address().port}`));
+server.listen(PORT);

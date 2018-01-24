@@ -40,13 +40,18 @@ const updateStatus =function(todoID,itemID){
   doXmlRequest('post','/updateStatus',() => {window.location.reload();},`todoID=${todoID}&itemID=${itemID}`);
 };
 
-const viewItems=function (todoID) {
-  document.getElementById('todo-id').value=todoID;
-  document.getElementById('viewItems').submit();
-};
+// const viewItems=function (todoID) {
+//   document.getElementById('todo-id').value=todoID;
+//   document.getElementById('viewItems').submit();
+// };
 
 window.onload=function () {
   const url=window.location.href;
   id=parseQuery(url).query.todoID;
+  console.log(id);
+  if(!id) {
+    window.location.href='/index.html';
+    return ;
+  }
   doXmlRequest('post','/viewItems',displayItems,`todoID=${id}`);
 };
