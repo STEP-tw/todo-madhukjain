@@ -25,7 +25,8 @@ class ViewItemsHandler extends DefaultHandler{
       }
       htmlStr += `<p style="${style}">${items[id].getObjective()}</p>
       ${this.generateButton(todoID,items[id],'deleteItem','Delete')}
-      ${this.generateButton(todoID,items[id],'updateStatus',status)}`;
+      ${this.generateButton(todoID,items[id],'updateStatus',status)}
+      ${this.generateButton(todoID,items[id],'editItem',"Edit")}`;
     });
     return htmlStr;
   }

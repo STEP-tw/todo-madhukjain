@@ -40,6 +40,22 @@ const updateStatus =function(todoID,itemID){
   doXmlRequest('post','/updateStatus',() => {window.location.reload();},`todoID=${todoID}&itemID=${itemID}`);
 };
 
+const updateItem = function(todoID,itemID){
+  let editItem = document.querySelector('.editItem');
+  let objective = editItem.querySelector('[name="itemTitle"]').value;
+  let data = `objective=${objective}&todoID=${todoID}&itemID=${itemID}`
+  doXmlRequest('post','/updateItem',() => {window.location.reload();},data);
+}
+
+const editItem = function(todoID,itemID){
+  let editItemDiv = document.querySelector('.editItem');
+  editItemDiv.classList.remove('hidden');
+  editItemDiv.querySelector('[name="cancel"]').onclick = function(){
+    editItemDiv.classList.add('hidden');
+  }
+  editItemDiv.querySelector('[name="save"]').onclick = `updateItem(${todoID},${itemID})`
+}
+
 window.onload=function () {
   const url=window.location.href;
   id=parseQuery(url).query.todoID;

@@ -4,13 +4,21 @@
     <meta charset="utf-8">
     <title>Todo Items</title>
     <script src="js/items.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="/css/style.css">
   </head>
   <body>
+
     <div id="addItem">
       <input type="text" name="title" value="" id="objective">
       <button type="button" name="button" onclick="addItem()">Add Item</button>
     </div>
     <div  id="items">
+    </div>
+    <div class="editItem hidden">
+      Title:
+      <input type="text" name="itemTitle" value="">
+      <button type="button" name="save">Save</button>
+      <button type="button" name="cancel">Cancel</button>
     </div>
   </body>
 </html>
