@@ -14,6 +14,7 @@ const ViewItemsHandler = require('./handlers/viewItemsHandler.js');
 const AddItemHandler = require('./handlers/addItemHandler.js');
 const UpdateStatusHandler = require('./handlers/updateStatusHandler.js');
 const UpdateItemHandler = require('./handlers/updateItemHandler.js');
+const UpdateTodoHandler = require('./handlers/updateTodoHandler.js');
 const TodoApp = require('./lib/todoApp');
 
 
@@ -32,6 +33,7 @@ const viewItemsHandler = new ViewItemsHandler(todoApp);
 const addItemHandler = new AddItemHandler(todoApp);
 const updateStatusHandler = new UpdateStatusHandler(todoApp);
 const updateItemHandler = new UpdateItemHandler(todoApp);
+const updateTodoHandler = new UpdateTodoHandler(todoApp);
 
 /*=========================*/
 
@@ -102,11 +104,14 @@ app.post('/login',(req,res) => {
   user.sessionid = sessionid;
   res.redirect('index.html');
 });
+
 app.get('/logout',(req,res) => {
   res.setHeader('Set-Cookie',[`loginFailed=false,Expires=${new Date(1).toUTCString()}`,`sessionid=0,Expires=${new Date(1).toUTCString()}`]);
   delete req.user.sessionid;
   res.redirect('/login.html');
 });
+
+app.post('/updateTodo',updateTodoHandler.getRequestHandler());
 app.post('/updateItem',updateItemHandler.getRequestHandler());
 app.post('/updateStatus',updateStatusHandler.getRequestHandler());
 app.post('/deleteItem',deleteItemHandler.getRequestHandler());

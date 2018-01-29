@@ -15,19 +15,24 @@
     <input type="text" name="description" value="">
     <input type="submit" name="Submit" value="Add">
   </form>
-    <div  id="lists">
+  <div  id="lists">
+  </div>
 
-    </div>
   <div  id="div-viewItems">
     <form  action="/todoItem.html" method="get" id="viewItems">
       <input type="hidden" name="todoID" id="todo-id" value="">
     </form>
   </div>
-  <div style="display:none" id="editTodo">
+
+  <div class="edit hidden">
     Title:
-    <input type="text" name="todoTitle" value="">
+    <input type="text" name="todoTitle" value=""><br>
     Description:
     <input type="text" name="todoDes" value="">
+    <input type="hidden" name="todoID" value="">
+    <button type="button" name="save">Save</button>
+    <button type="button" name="cancel">Cancel</button>
   </div>
+
 </body>
 </html>

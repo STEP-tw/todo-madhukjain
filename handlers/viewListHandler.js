@@ -16,6 +16,8 @@ class ViewListHandler extends DefaultHandler{
     let htmlStr='';
     todoIds.forEach((id) => {
       htmlStr += `<b >${todos[id].getTitle()}</b>
+        <input id="${id}_title" type="hidden" value="${todos[id].getTitle()}"></input>
+        <input id="${id}_desc" type="hidden" value="${todos[id].getDescription()}"></input>
        ${this.generateButton(todos[id],'deleteTodo','Delete')}
        ${this.generateButton(todos[id],'editTodo','Edit')}
        ${this.generateButton(todos[id],'viewItems','View Items')}`;

@@ -76,3 +76,6 @@ hr{
   font-size: 20px;
   margin-left: 0px;
 }
+.hidden{
+  visibility: hidden;
+}
